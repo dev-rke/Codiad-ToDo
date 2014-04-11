@@ -1,6 +1,6 @@
 [ { "author" : "rke",
     "version": "0.1",
-    "name" : "Codiad ToDo List",
+    "name" : "ToDo List",
     "image" : "",
-    "url" : "",
+    "url" : "https://github.com/dev-rke/Codiad-ToDo",
   } ]
