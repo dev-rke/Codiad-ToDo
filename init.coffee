@@ -69,7 +69,7 @@ class codiad.ToDo
 	###
 	updateToDo: =>
 		content = @codiad.editor.getContent()
-		loc = content.split(/\r?\n/)
+		loc = (content || "").split(/\r?\n/)
 		matches = []
 		editorToDo = []
 		for line, index in loc
