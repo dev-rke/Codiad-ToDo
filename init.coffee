@@ -1,5 +1,5 @@
 ###
-	Copyright (c) 2014, RKE
+	Copyright (c) 2014, dev-rke
 ###
 
 class codiad.ToDo
@@ -68,8 +68,10 @@ class codiad.ToDo
 		update todo button and menu
 	###
 	updateToDo: =>
+		editorInstance = @codiad.editor.getActive()
+		return if not editorInstance
 		content = @codiad.editor.getContent()
-		loc = (content || "").split(/\r?\n/)
+		loc = content.split(/\r?\n/)
 		matches = []
 		editorToDo = []
 		for line, index in loc
@@ -87,8 +89,8 @@ class codiad.ToDo
 				)
 		if matches.length > 0
 			@$todoMenu.empty().append $(matches.join "")
-			editor = @codiad.editor.getActive().getSession()
-			editor.setAnnotations(editorToDo.concat editor.getAnnotations())
+			session = editorInstance.getSession()
+			session.setAnnotations(editorToDo.concat session.getAnnotations())
 			@$todoButton.find('span').
 				removeClass('icon-check').
 				addClass('icon-clipboard')
