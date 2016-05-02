@@ -60,7 +60,7 @@
           line = _this.jQuery(element.currentTarget).data('line');
           if (line) {
             _this.codiad.active.gotoLine(line);
-            return _this.codiad.active.focus();
+            return _this.codiad.editor.focus();
           }
         };
       })(this));
@@ -72,8 +72,13 @@
       this.updateInterval = null;
       this.amplify.subscribe('active.onOpen', (function(_this) {
         return function() {
+          var activeInstance;
           _this.updateToDo();
-          return _this.codiad.editor.getActive().getSession().on('change', function(e) {
+          activeInstance = _this.codiad.editor.getActive();
+          if (!activeInstance) {
+            return;
+          }
+          return activeInstance.getSession().on('change', function(e) {
             clearTimeout(_this.updateInterval);
             return _this.updateInterval = setTimeout(_this.updateToDo, 1000);
           });

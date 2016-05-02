@@ -50,14 +50,16 @@ class codiad.ToDo
 			line = @jQuery(element.currentTarget).data 'line'
 			if line
 				@codiad.active.gotoLine line
-				@codiad.active.focus()
+				@codiad.editor.focus()
 		
 		@amplify.subscribe 'active.onFocus', =>
 			@updateToDo()
 		@updateInterval = null
 		@amplify.subscribe 'active.onOpen', =>
 			@updateToDo()
-			@codiad.editor.getActive().getSession().on 'change', (e) =>
+			activeInstance = @codiad.editor.getActive()
+			return if not activeInstance
+			activeInstance.getSession().on 'change', (e) =>
 				clearTimeout @updateInterval
 				@updateInterval = setTimeout @updateToDo, 1000
 		@amplify.subscribe 'active.onClose', =>
